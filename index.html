@@ -932,6 +932,57 @@
   .fade-up-d2 { animation-delay: 0.2s; }
   .fade-up-d3 { animation-delay: 0.3s; }
 
+
+  /* ===== HAMBURGER ===== */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 1001;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--ivory);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  /* Mobile nav drawer */
+  #mobile-nav-drawer {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    background: rgba(26,5,51,0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(200,154,58,0.2);
+    padding: 20px 5%;
+    z-index: 999;
+    flex-direction: column;
+    gap: 4px;
+    animation: fadeUp 0.2s ease;
+  }
+  #mobile-nav-drawer.open { display: flex; }
+  #mobile-nav-drawer a {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--mist);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(200,154,58,0.08);
+    cursor: pointer;
+    background: none;
+    border-left: none;
+    font-family: var(--font-body);
+    transition: color 0.2s;
+  }
+  #mobile-nav-drawer a:last-child { border-bottom: none; }
+  #mobile-nav-drawer a:hover { color: var(--gold); }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
     .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -939,6 +990,7 @@
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .nav-actions .btn-outline { display: none; }
+    .hamburger { display: flex; }
     .hero-stats { flex-direction: column; gap: 24px; }
     .dashboard-layout { flex-direction: column; }
     .sidebar {
@@ -983,11 +1035,24 @@
     <li><a onclick="navScrollTo('query-section')" role="button" tabindex="0">Contact</a></li>
     <li><a onclick="navScrollTo('plans')" role="button" tabindex="0">Plans</a></li>
   </ul>
+  <button class="hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-actions" id="nav-actions">
     <button class="btn btn-outline btn-sm" onclick="showPage('login')">Login</button>
     <button class="btn btn-primary btn-sm" onclick="showPage('login')">Build Your Board</button>
   </div>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div id="mobile-nav-drawer" role="navigation" aria-label="Mobile navigation">
+  <a onclick="navScrollTo('pillars');toggleMobileNav()">Five Pillars</a>
+  <a onclick="navScrollTo('advisors-preview');toggleMobileNav()">Advisors</a>
+  <a onclick="navScrollTo('how-it-works');toggleMobileNav()">How It Works</a>
+  <a onclick="navScrollTo('query-section');toggleMobileNav()">Contact</a>
+  <a onclick="navScrollTo('plans');toggleMobileNav()">Plans</a>
+  <a onclick="showPage('login');toggleMobileNav()" style="color:var(--gold);">Login →</a>
+</div>
 
 
 <!-- ========================================================
@@ -1140,7 +1205,7 @@
             <span style="font-size:1.4rem;" aria-hidden="true">📧</span>
             <div>
               <div style="font-size:12px;color:var(--mist);">Email</div>
-              <div style="font-size:14px;color:var(--gold);"><a href="/cdn-cgi/l/email-protection#abc3cec7c7c4ebd8cec8c4c5cfc9c4cad9cf85c2c5" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="93fbf6fffffcd3e0f6f0fcfdf7f1fcf2e1f7bdfafd">[email&#160;protected]</span></a></div>
+              <div style="font-size:14px;color:var(--gold);"><a href="mailto:hello@secondboard.in" style="color:var(--gold);text-decoration:none;">hello@secondboard.in</a></div>
             </div>
           </div>
           <div style="display:flex;gap:12px;align-items:center;">
@@ -1191,7 +1256,7 @@
           ✅ Query submitted! You'll receive a confirmation email within minutes.
         </div>
         <p style="font-size:11px;color:var(--mist);margin-top:12px;line-height:1.6;">
-          📧 Queries are sent to <strong style="color:var(--gold);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e68e838a8a89a69583858988828489879482c88f88">[email&#160;protected]</a></strong> and you'll receive a notification email with a reference number.
+          📧 Queries are sent to <strong style="color:var(--gold);">hello@secondboard.in</strong> and you'll receive a notification email with a reference number.
         </p>
       </div>
     </div>
@@ -1365,11 +1430,12 @@
 
       <div class="form-row">
         <label class="form-label" for="login-email">Email Address</label>
-        <input class="form-input" type="email" id="login-email" name="email" placeholder="you@company.com" value="demo@sme.com" autocomplete="email">
+        <input class="form-input" type="email" id="login-email" name="email" placeholder="you@company.com" value="" autocomplete="email">
       </div>
       <div class="form-row">
         <label class="form-label" for="login-password">Password</label>
-        <input class="form-input" type="password" id="login-password" name="password" placeholder="••••••••" value="demo123" autocomplete="current-password">
+        <input class="form-input" type="password" id="login-password" name="password" placeholder="••••••••" value="" autocomplete="current-password">
+      <div style="font-size:11px;color:rgba(160,174,192,0.7);margin-top:6px;">Demo: demo@sme.com / demo123</div>
       </div>
       <div style="display:flex;justify-content:flex-end;margin-bottom:20px;">
         <a href="#" onclick="return false;" style="font-size:12px;color:var(--gold);">Forgot Password?</a>
@@ -1389,7 +1455,7 @@
         <span class="config-key">SMTP_PORT</span> — Port (587 for TLS / 465 for SSL)<br>
         <span class="config-key">SMTP_USER</span> — Sender email address<br>
         <span class="config-key">SMTP_PASS</span> — App password or SMTP password<br>
-        <span class="config-key">NOTIFY_EMAIL</span> — Queries destination (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a5cdc0c9c9cae5d6c0c6cacbc1c7cac4d7c18bcccb">[email&#160;protected]</a>)<br>
+        <span class="config-key">NOTIFY_EMAIL</span> — Queries destination (hello@secondboard.in)<br>
         <span class="config-key">JWT_SECRET</span> — Token signing secret for session auth<br>
         <span class="config-key">DB_CONN</span> — MongoDB/PostgreSQL connection string for user storage<br><br>
         Service recommendation: <strong style="color:var(--gold2);">SendGrid</strong> (transactional) + <strong style="color:var(--gold2);">Mailchimp</strong> (marketing)
@@ -1707,7 +1773,7 @@
     <div style="font-size:3rem;margin-bottom:16px;" aria-hidden="true">✅</div>
     <div class="modal-title" id="notif-modal-title" style="text-align:center;">Board Confirmed!</div>
     <p style="font-size:14px;color:var(--mist);line-height:1.7;margin-bottom:24px;">Your Second Board has been confirmed. Email notifications have been dispatched to all selected advisors and your registered email address.</p>
-    <div class="success-banner" style="text-align:left;"><span aria-hidden="true">📧</span> Confirmation sent to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8aeeefe7e5caf9e7efa4e9e5e7">[email&#160;protected]</a> and all advisors.</div>
+    <div class="success-banner" style="text-align:left;"><span aria-hidden="true">📧</span> Confirmation sent to demo@sme.com and all board advisors.</div>
     <button class="btn btn-primary" style="margin-top:24px;" onclick="closeModal('notif-modal')">Go to Dashboard</button>
   </div>
 </div>
@@ -1716,7 +1782,7 @@
 <!-- ========================================================
      JAVASCRIPT
      ======================================================== -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 'use strict';
 
 /* ===================== DATA ===================== */
@@ -2270,4 +2336,43 @@ function submitQuery() {
 }
 
 /* ===================== FAQ TOGGLE ===================== */
-fu
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+  }
+}
+
+/* ===================== MOBILE NAV HAMBURGER ===================== */
+function toggleMobileNav() {
+  const links = document.getElementById('mobile-nav-drawer');
+  if (links) links.classList.toggle('open');
+}
+
+/* ===================== SCROLL HANDLER ===================== */
+(function() {
+  let lastScroll = 0;
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function() {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 80) {
+      nav.style.background = 'rgba(26,5,51,0.98)';
+    } else {
+      nav.style.background = 'rgba(26,5,51,0.94)';
+    }
+    lastScroll = currentScroll;
+  }, { passive: true });
+})();
+
+/* ===================== INIT ===================== */
+document.addEventListener('DOMContentLoaded', function() {
+  renderPublicAdvisors();
+});
+</script>
+</body>
+</html>
